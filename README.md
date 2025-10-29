@@ -10,7 +10,7 @@ Please note: This template is no longer effective against the latest version of 
 ## Features
 - Sleep timing to bypass simple heuristics evasion. 
 - XOR encryption to evade static analysis.
-- Process injection to inject into remote processes to reduce suspicion.
+- Process injection to migrate shellcode into remote processes to reduce suspicion.
 
 ## Compilation
 To compile, please ensure that you have `x86_64-w64-mingw32-gcc`, `i686-w64-mingw32-gcc`, or equivalent compilers installed. 
