@@ -5,7 +5,7 @@ ARCH ?= x64
 ifeq ($(ARCH),x64)
 	ARCH_FLAG=-m64
 	CC:=x86_64-w64-mingw32-gcc
-else ifeq ($(ARCH),x32)
+else ifeq ($(ARCH),x86)
 	ARCH_FLAG=-m32
 	CC:=i686-w64-mingw32-gcc
 else
